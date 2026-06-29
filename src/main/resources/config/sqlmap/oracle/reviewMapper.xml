@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="review.dao.ReviewDAO">
+
+    <sql id="listWhere">
+        <where>
+            AND platform = #{platform} AND product_id = #{productId}
+            <if test="keyword != null and keyword != ''">
+                AND review_content LIKE '%' || #{keyword} || '%'
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectList" parameterType="reviewCriteria" resultType="reviewVO">
+        SELECT review_no AS reviewNo, platform, product_id AS productId, rating, sentiment,
+               review_content AS reviewContent, review_date AS reviewDate, nickname
+        FROM t_review
+        <include refid="listWhere"/>
+        ORDER BY review_date DESC NULLS LAST, review_no DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+    </select>
+
+    <select id="selectListCount" parameterType="reviewCriteria" resultType="int">
+        SELECT COUNT(*) FROM t_review
+        <include refid="listWhere"/>
+    </select>
+
+    <insert id="insert" parameterType="reviewVO">
+        INSERT INTO t_review (review_no, platform, product_id, rating, sentiment,
+                               review_content, review_date, nickname)
+        VALUES (seq_t_review_no.nextval, #{platform}, #{productId}, #{rating}, #{sentiment},
+                #{reviewContent}, #{reviewDate}, #{nickname})
+    </insert>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM t_review WHERE review_no = #{value}
+    </delete>
+
+</mapper>

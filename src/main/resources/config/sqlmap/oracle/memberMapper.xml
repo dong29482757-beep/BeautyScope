@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member.dao.MemberDAO">
+
+    <insert id="insert" parameterType="memberVO">
+        INSERT INTO t_member (member_id, password, nickname, email, role, join_type)
+        VALUES (#{memberId}, #{password}, #{nickname}, #{email}, #{role}, #{joinType})
+    </insert>
+
+    <select id="selectOne" parameterType="string" resultType="memberVO">
+        SELECT member_id AS "memberId", password, nickname, email, role,
+               join_type AS "joinType", reg_date AS "regDate"
+        FROM t_member
+        WHERE member_id = #{memberId}
+    </select>
+
+    <select id="selectList" parameterType="string" resultType="memberVO">
+        SELECT member_id AS "memberId", password, nickname, email, role,
+               join_type AS "joinType", reg_date AS "regDate"
+        FROM t_member
+        <where>
+            <if test="_parameter != null and _parameter != ''">
+                AND (member_id LIKE '%' || #{_parameter} || '%' OR nickname LIKE '%' || #{_parameter} || '%')
+            </if>
+        </where>
+        ORDER BY reg_date DESC
+    </select>
+
+    <select id="selectCount" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM t_member WHERE member_id = #{memberId}
+    </select>
+
+    <update id="updateRole" parameterType="map">
+        UPDATE t_member SET role = #{role} WHERE member_id = #{memberId}
+    </update>
+
+    <update id="updateFaceDescriptor" parameterType="map">
+        UPDATE t_member SET face_descriptor = #{faceDescriptor} WHERE member_id = #{memberId}
+    </update>
+
+    <select id="selectAllWithFace" resultType="memberVO">
+        SELECT member_id AS "memberId", nickname, face_descriptor AS "faceDescriptor"
+        FROM t_member
+        WHERE face_descriptor IS NOT NULL
+    </select>
+
+</mapper>

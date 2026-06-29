@@ -1,0 +1,20 @@
+# 카카오/네이버 키가 들어있는 실제 설정 파일 — 절대 커밋하지 않는다.
+# 키 없이 구조만 보려면 oauth.properties.example 참고.
+src/main/resources/config/oauth.properties
+
+target/
+*.class
+
+# 크롤링한 상품 이미지(800MB+) — 저장소 용량 문제로 깃에는 올리지 않음.
+# 재현 방법은 README 참고.
+src/main/webapp/resources/product_images/
+
+.DS_Store
+*.log
+bin/
+.settings/
+.project
+.classpath
+
+# 이 프로젝트와 무관한 다른 폴더
+_nungil_analysis/

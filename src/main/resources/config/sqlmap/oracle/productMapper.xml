@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="product.dao.ProductDAO">
+
+    <sql id="listWhere">
+        <where>
+            <if test="category != null and category != ''">
+                AND category = #{category}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND product_name LIKE '%' || #{keyword} || '%'
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectList" parameterType="productCriteria" resultType="productVO">
+        SELECT platform, product_id AS productId, product_name AS productName,
+               brand_name AS brandName, category, review_count AS reviewCount,
+               avg_rating AS avgRating, n_negative AS nNegative, n_neutral AS nNeutral,
+               n_positive AS nPositive, image_path AS imagePath
+        FROM (
+            SELECT t.*,
+                   (SELECT MAX(r.review_date) FROM t_review r
+                     WHERE r.platform = t.platform AND r.product_id = t.product_id) AS latest_review_date
+            FROM t_product t
+            <include refid="listWhere"/>
+        )
+        ORDER BY
+        <choose>
+            <when test="sort == 'rating_asc'">avg_rating ASC, review_count DESC</when>
+            <when test="sort == 'latest'">latest_review_date DESC NULLS LAST</when>
+            <otherwise>avg_rating DESC, review_count DESC</otherwise>
+        </choose>
+        OFFSET #{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+    </select>
+
+    <select id="selectListCount" parameterType="productCriteria" resultType="int">
+        SELECT COUNT(*) FROM t_product
+        <include refid="listWhere"/>
+    </select>
+
+    <select id="selectOne" parameterType="map" resultType="productVO">
+        SELECT platform, product_id AS productId, product_name AS productName,
+               brand_name AS brandName, category, review_count AS reviewCount,
+               avg_rating AS avgRating, n_negative AS nNegative, n_neutral AS nNeutral,
+               n_positive AS nPositive, image_path AS imagePath
+        FROM t_product
+        WHERE platform = #{platform} AND product_id = #{productId}
+    </select>
+
+    <select id="selectCategories" resultType="string">
+        SELECT DISTINCT category FROM t_product
+        WHERE category IS NOT NULL
+        ORDER BY category
+    </select>
+
+    <select id="selectTop5" resultType="productVO">
+        SELECT platform, product_id AS productId, product_name AS productName,
+               brand_name AS brandName, category, review_count AS reviewCount,
+               avg_rating AS avgRating, n_negative AS nNegative, n_neutral AS nNeutral,
+               n_positive AS nPositive, image_path AS imagePath
+        FROM t_product
+        WHERE review_count >= 20
+        ORDER BY avg_rating DESC, review_count DESC
+        FETCH FIRST 5 ROWS ONLY
+    </select>
+
+    <select id="selectRanking" parameterType="string" resultType="productVO">
+        SELECT platform, product_id AS productId, product_name AS productName,
+               brand_name AS brandName, category, review_count AS reviewCount,
+               avg_rating AS avgRating, n_negative AS nNegative, n_neutral AS nNeutral,
+               n_positive AS nPositive, image_path AS imagePath
+        FROM t_product
+        WHERE category = #{category} AND review_count >= 20
+        ORDER BY avg_rating DESC, review_count DESC
+        FETCH FIRST 20 ROWS ONLY
+    </select>
+
+    <select id="selectRatingDist" parameterType="map" resultType="ratingDistVO">
+        SELECT TRUNC(rating) AS rating, COUNT(*) AS cnt
+        FROM t_review
+        WHERE platform = #{platform} AND product_id = #{productId}
+        GROUP BY TRUNC(rating)
+        ORDER BY TRUNC(rating)
+    </select>
+
+    <select id="selectBrandStats" parameterType="string" resultType="brandStatVO">
+        SELECT brand_name AS brandName,
+               ROUND(SUM(avg_rating * review_count) / SUM(review_count), 2) AS avgRating,
+               COUNT(*) AS productCount
+        FROM t_product
+        WHERE category = #{category} AND brand_name IS NOT NULL
+        GROUP BY brand_name
+        ORDER BY avgRating DESC
+        FETCH FIRST 10 ROWS ONLY
+    </select>
+    <select id="selectStats" resultType="map">
+        SELECT (SELECT COUNT(*) FROM t_product) AS "productCount",
+               (SELECT COUNT(*) FROM t_review) AS "reviewCount",
+               (SELECT COUNT(DISTINCT platform) FROM t_product) AS "platformCount",
+               (SELECT ROUND(AVG(avg_rating), 2) FROM t_product) AS "avgRating"
+        FROM dual
+    </select>
+
+    <insert id="insert" parameterType="productVO">
+        INSERT INTO t_product (platform, product_id, product_name, brand_name, category,
+                                review_count, avg_rating, n_negative, n_neutral, n_positive)
+        VALUES (#{platform}, #{productId}, #{productName}, #{brandName}, #{category},
+                0, 0, 0, 0, 0)
+    </insert>
+
+    <update id="update" parameterType="productVO">
+        UPDATE t_product
+        SET product_name = #{productName}, brand_name = #{brandName}, category = #{category}
+        WHERE platform = #{platform} AND product_id = #{productId}
+    </update>
+
+    <delete id="delete" parameterType="map">
+        BEGIN
+            DELETE FROM t_aspect_sentiment WHERE platform = #{platform} AND product_id = #{productId};
+            DELETE FROM t_review WHERE platform = #{platform} AND product_id = #{productId};
+            DELETE FROM t_product WHERE platform = #{platform} AND product_id = #{productId};
+        END;
+    </delete>
+
+    <update id="recomputeStats" parameterType="map">
+        UPDATE t_product p
+        SET (review_count, avg_rating, n_negative, n_neutral, n_positive) = (
+            SELECT COUNT(*),
+                   NVL(ROUND(AVG(rating), 2), 0),
+                   COUNT(CASE WHEN sentiment = 'negative' THEN 1 END),
+                   COUNT(CASE WHEN sentiment = 'neutral' THEN 1 END),
+                   COUNT(CASE WHEN sentiment = 'positive' THEN 1 END)
+            FROM t_review r
+            WHERE r.platform = p.platform AND r.product_id = p.product_id
+        )
+        WHERE p.platform = #{platform} AND p.product_id = #{productId}
+    </update>
+
+</mapper>

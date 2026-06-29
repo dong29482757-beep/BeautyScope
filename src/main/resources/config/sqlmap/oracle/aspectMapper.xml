@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aspect.dao.AspectDAO">
+
+    <select id="selectByProduct" parameterType="map" resultType="aspectVO">
+        SELECT aspect,
+               SUM(CASE WHEN sentiment = 'positive' THEN cnt ELSE 0 END) AS "positiveCnt",
+               SUM(CASE WHEN sentiment = 'neutral' THEN cnt ELSE 0 END) AS "neutralCnt",
+               SUM(CASE WHEN sentiment = 'negative' THEN cnt ELSE 0 END) AS "negativeCnt",
+               ROUND(SUM(CASE WHEN sentiment = 'positive' THEN cnt ELSE 0 END) * 100.0 / SUM(cnt), 1) AS "positiveRatio"
+        FROM t_aspect_sentiment
+        WHERE platform = #{platform} AND product_id = #{productId}
+        GROUP BY aspect
+        ORDER BY aspect
+    </select>
+
+    <select id="selectAspectNames" resultType="string">
+        SELECT DISTINCT aspect FROM t_aspect_sentiment ORDER BY aspect
+    </select>
+
+    <select id="selectRecommend" parameterType="map" resultType="recommendVO">
+        SELECT p.platform, p.product_id AS "productId", p.product_name AS "productName",
+               p.brand_name AS "brandName", p.category,
+               p.avg_rating AS "avgRating", p.review_count AS "reviewCount",
+               ROUND(SUM(CASE WHEN a.sentiment = 'positive' THEN a.cnt ELSE 0 END) * 100.0 / SUM(a.cnt), 1) AS "positiveRatio"
+        FROM t_product p
+        JOIN t_aspect_sentiment a ON a.platform = p.platform AND a.product_id = p.product_id
+        WHERE p.category = #{category} AND a.aspect = #{aspect} AND p.review_count >= 20
+        GROUP BY p.platform, p.product_id, p.product_name, p.brand_name, p.category, p.avg_rating, p.review_count
+        ORDER BY "positiveRatio" DESC, p.avg_rating DESC
+        FETCH FIRST 10 ROWS ONLY
+    </select>
+
+    <!--
+        합성 점수 추천용 원재료 조회. 제품 1개당 선택한 속성 개수만큼 행이 나온다
+        (점수 계산은 Java 쪽 AspectServiceImpl에서 베이지안 보정 + 가중합으로 수행).
+    -->
+    <select id="selectRecommendCandidates" parameterType="map" resultType="recommendCandidateVO">
+        SELECT p.platform, p.product_id AS "productId", p.product_name AS "productName",
+               p.brand_name AS "brandName",
+               p.avg_rating AS "avgRating", p.review_count AS "reviewCount",
+               p.n_positive AS "nPositive",
+               a.aspect,
+               SUM(CASE WHEN a.sentiment = 'positive' THEN a.cnt ELSE 0 END) AS "posCnt",
+               SUM(a.cnt) AS "totalCnt"
+        FROM t_product p
+        JOIN t_aspect_sentiment a ON a.platform = p.platform AND a.product_id = p.product_id
+        WHERE p.category = #{category}
+          AND a.aspect IN
+          <foreach item="asp" collection="aspects" open="(" separator="," close=")">
+              #{asp}
+          </foreach>
+          AND p.review_count >= 10
+        GROUP BY p.platform, p.product_id, p.product_name, p.brand_name, p.avg_rating, p.review_count, p.n_positive, a.aspect
+    </select>
+
+</mapper>

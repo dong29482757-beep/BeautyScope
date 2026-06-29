@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<typeAliases>
+		<typeAlias type="kr.ac.kopo.board.vo.BoardVO" alias="boardVO"/>
+		<typeAlias type="kr.ac.kopo.reply.vo.ReplyVO" alias="replyVO"/>
+		<typeAlias type="kr.ac.kopo.product.vo.ProductVO" alias="productVO"/>
+		<typeAlias type="kr.ac.kopo.product.vo.ProductCriteria" alias="productCriteria"/>
+		<typeAlias type="kr.ac.kopo.product.vo.RatingDistVO" alias="ratingDistVO"/>
+		<typeAlias type="kr.ac.kopo.product.vo.BrandStatVO" alias="brandStatVO"/>
+		<typeAlias type="kr.ac.kopo.review.vo.ReviewVO" alias="reviewVO"/>
+		<typeAlias type="kr.ac.kopo.review.vo.ReviewCriteria" alias="reviewCriteria"/>
+		<typeAlias type="kr.ac.kopo.aspect.vo.AspectVO" alias="aspectVO"/>
+		<typeAlias type="kr.ac.kopo.aspect.vo.RecommendVO" alias="recommendVO"/>
+		<typeAlias type="kr.ac.kopo.aspect.vo.RecommendCandidateVO" alias="recommendCandidateVO"/>
+		<typeAlias type="kr.ac.kopo.member.vo.MemberVO" alias="memberVO"/>
+	</typeAliases>
+ 
+</configuration>

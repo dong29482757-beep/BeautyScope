@@ -1,0 +1,6 @@
+kakao.client-id=
+kakao.redirect-uri=http://localhost:8080/BeautyScope/login/kakao/callback
+
+naver.client-id=
+naver.client-secret=
+naver.redirect-uri=http://localhost:8080/BeautyScope/login/naver/callback

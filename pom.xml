@@ -1,0 +1,164 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+<groupId>kr.ac.kopo</groupId>
+<artifactId>BeautyScope</artifactId>
+<version>0.0.1-SNAPSHOT</version>
+<packaging>war</packaging>
+<dependencies>
+<!--  Source:
+		https://mvnrepository.com/artifact/org.springframework/spring-webmvc  -->
+<dependency>
+<groupId>org.springframework</groupId>
+<artifactId>spring-webmvc</artifactId>
+<version>6.2.17</version>
+</dependency>
+<!--  Source:
+		https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api  -->
+<dependency>
+<groupId>jakarta.servlet</groupId>
+<artifactId>jakarta.servlet-api</artifactId>
+<version>6.1.0</version>
+<scope>provided</scope>
+</dependency>
+<!--  Source:
+		https://mvnrepository.com/artifact/jakarta.servlet.jsp/jakarta.servlet.jsp-api  -->
+<dependency>
+<groupId>jakarta.servlet.jsp</groupId>
+<artifactId>jakarta.servlet.jsp-api</artifactId>
+<version>4.0.0</version>
+</dependency>
+<!--  Source:
+		https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api  -->
+<dependency>
+<groupId>jakarta.servlet.jsp.jstl</groupId>
+<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+<version>3.0.2</version>
+</dependency>
+<!--  Source: https://mvnrepository.com/artifact/org.glassfish.web/jakarta.servlet.jsp.jstl  -->
+<dependency>
+<groupId>org.glassfish.web</groupId>
+<artifactId>jakarta.servlet.jsp.jstl</artifactId>
+<version>3.0.1</version>
+<scope>runtime</scope>
+</dependency>
+<!--  Source:
+		https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core  -->
+<dependency>
+<groupId>com.fasterxml.jackson.core</groupId>
+<artifactId>jackson-core</artifactId>
+<version>2.21.2</version>
+<!-- <scope>compile</scope> -->
+</dependency>
+<!--  Source:
+		https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind  -->
+<dependency>
+<groupId>com.fasterxml.jackson.core</groupId>
+<artifactId>jackson-databind</artifactId>
+<version>2.21.2</version>
+<!-- <scope>compile</scope> -->
+</dependency>
+<!--  Source:
+		https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations  -->
+<dependency>
+<groupId>com.fasterxml.jackson.core</groupId>
+<artifactId>jackson-annotations</artifactId>
+<version>2.21</version>
+<!-- <scope>compile</scope> -->
+</dependency>
+<!--  Source:
+		https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc11  -->
+<dependency>
+<groupId>com.oracle.database.jdbc</groupId>
+<artifactId>ojdbc11</artifactId>
+<version>23.26.1.0.0</version>
+<!-- <scope>compile</scope> -->
+</dependency>
+<!--  Source:
+		https://mvnrepository.com/artifact/org.springframework/spring-jdbc  -->
+<dependency>
+<groupId>org.springframework</groupId>
+<artifactId>spring-jdbc</artifactId>
+<version>6.2.17</version>
+<!-- <scope>compile</scope> -->
+</dependency>
+<!--  Source: https://mvnrepository.com/artifact/org.mybatis/mybatis  -->
+<dependency>
+<groupId>org.mybatis</groupId>
+<artifactId>mybatis</artifactId>
+<version>3.5.19</version>
+<!-- <scope>compile</scope> -->
+</dependency>
+<!--  Source:
+		https://mvnrepository.com/artifact/org.mybatis/mybatis-spring  -->
+<dependency>
+<groupId>org.mybatis</groupId>
+<artifactId>mybatis-spring</artifactId>
+<version>4.0.0</version>
+<!-- <scope>compile</scope> -->
+</dependency>
+<!--  Source:
+		https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp  -->
+<dependency>
+<groupId>commons-dbcp</groupId>
+<artifactId>commons-dbcp</artifactId>
+<version>1.4</version>
+<!-- <scope>compile</scope> -->
+</dependency>
+<!--  Source: https://mvnrepository.com/artifact/org.apache.commons/commons-csv  -->
+<dependency>
+<groupId>org.apache.commons</groupId>
+<artifactId>commons-csv</artifactId>
+<version>1.12.0</version>
+</dependency>
+<!--  Source: https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto
+		비밀번호 해싱(BCrypt)만 쓰려고 추가 — Spring Security 필터체인 전체는 안 씀 -->
+<dependency>
+<groupId>org.springframework.security</groupId>
+<artifactId>spring-security-crypto</artifactId>
+<version>6.4.4</version>
+</dependency>
+<!--  Source:
+		https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api  -->
+<dependency>
+<groupId>org.junit.jupiter</groupId>
+<artifactId>junit-jupiter-api</artifactId>
+<version>5.14.4</version>
+<scope>test</scope>
+</dependency>
+<!--  Source:
+		https://mvnrepository.com/artifact/org.springframework/spring-test  -->
+<dependency>
+<groupId>org.springframework</groupId>
+<artifactId>spring-test</artifactId>
+<version>6.2.17</version>
+<scope>test</scope>
+</dependency>
+</dependencies>
+<build>
+<plugins>
+<plugin>
+<groupId>org.apache.maven.plugins</groupId>
+<artifactId>maven-compiler-plugin</artifactId>
+<version>3.13.0</version>
+<configuration>
+<source>17</source>
+<target>17</target>
+<encoding>UTF-8</encoding>
+<compilerArgs>
+<arg>-parameters</arg>
+</compilerArgs>
+</configuration>
+</plugin>
+<!-- 1회성 CSV->Oracle 적재 배치(DataLoader)를 mvn으로 바로 실행하기 위한 개발용 플러그인 -->
+<plugin>
+<groupId>org.codehaus.mojo</groupId>
+<artifactId>exec-maven-plugin</artifactId>
+<version>3.5.0</version>
+<configuration>
+<mainClass>kr.ac.kopo.loader.DataLoader</mainClass>
+<classpathScope>test</classpathScope>
+</configuration>
+</plugin>
+</plugins>
+</build>
+</project>

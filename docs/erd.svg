@@ -1,0 +1,181 @@
+<svg viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg" font-family="'Consolas','Courier New',monospace">
+  <rect width="900" height="620" fill="#FAFAFA"/>
+
+  <!-- Title -->
+  <text x="450" y="38" text-anchor="middle" font-size="20" font-weight="bold" fill="#1A1A1A">BeautyScope — ERD</text>
+
+  <!-- ═══ T_MEMBER ═══ -->
+  <rect x="30" y="60" width="260" height="250" rx="6" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2"/>
+  <rect x="30" y="60" width="260" height="36" rx="6" fill="#1A1A1A"/>
+  <rect x="30" y="84" width="260" height="12" rx="0" fill="#1A1A1A"/>
+  <text x="160" y="84" text-anchor="middle" font-size="13" font-weight="bold" fill="#FFFFFF">T_MEMBER</text>
+
+  <text x="48" y="115" font-size="11" fill="#8B3A3A" font-weight="bold">member_id</text>
+  <text x="210" y="115" font-size="11" fill="#555">VARCHAR2(50)</text>
+  <text x="285" y="115" font-size="10" fill="#8B3A3A" font-weight="bold">PK</text>
+  <line x1="30" y1="122" x2="290" y2="122" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="48" y="139" font-size="11" fill="#333">password</text>
+  <text x="210" y="139" font-size="11" fill="#555">VARCHAR2(255)</text>
+  <line x1="30" y1="146" x2="290" y2="146" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="48" y="163" font-size="11" fill="#333">nickname</text>
+  <text x="210" y="163" font-size="11" fill="#555">VARCHAR2(50)</text>
+  <line x1="30" y1="170" x2="290" y2="170" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="48" y="187" font-size="11" fill="#333">email</text>
+  <text x="210" y="187" font-size="11" fill="#555">VARCHAR2(100)</text>
+  <line x1="30" y1="194" x2="290" y2="194" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="48" y="211" font-size="11" fill="#333">role</text>
+  <text x="210" y="211" font-size="11" fill="#555">VARCHAR2(10)</text>
+  <line x1="30" y1="218" x2="290" y2="218" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="48" y="235" font-size="11" fill="#333">join_type</text>
+  <text x="210" y="235" font-size="11" fill="#555">VARCHAR2(10)</text>
+  <line x1="30" y1="242" x2="290" y2="242" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="48" y="259" font-size="11" fill="#333">reg_date</text>
+  <text x="210" y="259" font-size="11" fill="#555">DATE</text>
+  <line x1="30" y1="266" x2="290" y2="266" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="48" y="283" font-size="11" fill="#333">face_desc</text>
+  <text x="210" y="283" font-size="11" fill="#555">CLOB</text>
+  <text x="48" y="298" font-size="10" fill="#888" font-style="italic">← 얼굴 128차원 descriptor</text>
+
+  <!-- ═══ T_PRODUCT ═══ -->
+  <rect x="610" y="60" width="270" height="250" rx="6" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2"/>
+  <rect x="610" y="60" width="270" height="36" rx="6" fill="#1A1A1A"/>
+  <rect x="610" y="84" width="270" height="12" rx="0" fill="#1A1A1A"/>
+  <text x="745" y="84" text-anchor="middle" font-size="13" font-weight="bold" fill="#FFFFFF">T_PRODUCT</text>
+
+  <text x="628" y="115" font-size="11" fill="#8B3A3A" font-weight="bold">platform</text>
+  <text x="790" y="115" font-size="11" fill="#555">VARCHAR2(20)</text>
+  <text x="865" y="115" font-size="10" fill="#8B3A3A" font-weight="bold">PK</text>
+  <line x1="610" y1="122" x2="880" y2="122" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="628" y="139" font-size="11" fill="#8B3A3A" font-weight="bold">product_id</text>
+  <text x="790" y="139" font-size="11" fill="#555">VARCHAR2(100)</text>
+  <text x="865" y="139" font-size="10" fill="#8B3A3A" font-weight="bold">PK</text>
+  <line x1="610" y1="146" x2="880" y2="146" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="628" y="163" font-size="11" fill="#333">product_name</text>
+  <text x="790" y="163" font-size="11" fill="#555">VARCHAR2(500)</text>
+  <line x1="610" y1="170" x2="880" y2="170" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="628" y="187" font-size="11" fill="#333">brand_name</text>
+  <text x="790" y="187" font-size="11" fill="#555">VARCHAR2(100)</text>
+  <line x1="610" y1="194" x2="880" y2="194" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="628" y="211" font-size="11" fill="#333">category</text>
+  <text x="790" y="211" font-size="11" fill="#555">VARCHAR2(50)</text>
+  <line x1="610" y1="218" x2="880" y2="218" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="628" y="235" font-size="11" fill="#333">review_count</text>
+  <text x="790" y="235" font-size="11" fill="#555">NUMBER</text>
+  <line x1="610" y1="242" x2="880" y2="242" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="628" y="259" font-size="11" fill="#333">avg_rating</text>
+  <text x="790" y="259" font-size="11" fill="#555">NUMBER(3,2)</text>
+  <line x1="610" y1="266" x2="880" y2="266" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="628" y="283" font-size="11" fill="#333">n_positive / n_negative</text>
+  <text x="790" y="283" font-size="11" fill="#555">NUMBER</text>
+  <line x1="610" y1="290" x2="880" y2="290" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="628" y="307" font-size="11" fill="#333">image_path</text>
+  <text x="790" y="307" font-size="11" fill="#555">VARCHAR2(255)</text>
+
+  <!-- ═══ T_REVIEW ═══ -->
+  <rect x="30" y="360" width="260" height="225" rx="6" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2"/>
+  <rect x="30" y="360" width="260" height="36" rx="6" fill="#1A1A1A"/>
+  <rect x="30" y="384" width="260" height="12" rx="0" fill="#1A1A1A"/>
+  <text x="160" y="384" text-anchor="middle" font-size="13" font-weight="bold" fill="#FFFFFF">T_REVIEW</text>
+
+  <text x="48" y="415" font-size="11" fill="#8B3A3A" font-weight="bold">review_no</text>
+  <text x="210" y="415" font-size="11" fill="#555">NUMBER</text>
+  <text x="265" y="415" font-size="10" fill="#8B3A3A" font-weight="bold">PK</text>
+  <text x="48" y="428" font-size="10" fill="#888" font-style="italic">← 시퀀스 자동 생성</text>
+  <line x1="30" y1="435" x2="290" y2="435" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="48" y="452" font-size="11" fill="#4A7A4A" font-weight="bold">platform</text>
+  <text x="210" y="452" font-size="11" fill="#555">VARCHAR2(20)</text>
+  <text x="265" y="452" font-size="10" fill="#4A7A4A" font-weight="bold">FK</text>
+  <line x1="30" y1="459" x2="290" y2="459" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="48" y="476" font-size="11" fill="#4A7A4A" font-weight="bold">product_id</text>
+  <text x="210" y="476" font-size="11" fill="#555">VARCHAR2(100)</text>
+  <text x="265" y="476" font-size="10" fill="#4A7A4A" font-weight="bold">FK</text>
+  <line x1="30" y1="483" x2="290" y2="483" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="48" y="500" font-size="11" fill="#333">rating</text>
+  <text x="210" y="500" font-size="11" fill="#555">NUMBER(3,1)</text>
+  <line x1="30" y1="507" x2="290" y2="507" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="48" y="524" font-size="11" fill="#333">sentiment</text>
+  <text x="210" y="524" font-size="11" fill="#555">VARCHAR2(10)</text>
+  <line x1="30" y1="531" x2="290" y2="531" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="48" y="548" font-size="11" fill="#333">review_content</text>
+  <text x="210" y="548" font-size="11" fill="#555">CLOB</text>
+  <line x1="30" y1="555" x2="290" y2="555" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="48" y="572" font-size="11" fill="#333">nickname / review_date</text>
+
+  <!-- ═══ T_ASPECT_SENTIMENT ═══ -->
+  <rect x="610" y="360" width="270" height="200" rx="6" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2"/>
+  <rect x="610" y="360" width="270" height="36" rx="6" fill="#1A1A1A"/>
+  <rect x="610" y="384" width="270" height="12" rx="0" fill="#1A1A1A"/>
+  <text x="745" y="384" text-anchor="middle" font-size="13" font-weight="bold" fill="#FFFFFF">T_ASPECT_SENTIMENT</text>
+
+  <text x="628" y="415" font-size="11" fill="#4A7A4A" font-weight="bold">platform</text>
+  <text x="790" y="415" font-size="11" fill="#555">VARCHAR2(20)</text>
+  <text x="865" y="415" font-size="10" fill="#8B3A3A" font-weight="bold">PK</text>
+  <line x1="610" y1="422" x2="880" y2="422" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="628" y="439" font-size="11" fill="#4A7A4A" font-weight="bold">product_id</text>
+  <text x="790" y="439" font-size="11" fill="#555">VARCHAR2(100)</text>
+  <text x="865" y="439" font-size="10" fill="#8B3A3A" font-weight="bold">PK</text>
+  <line x1="610" y1="446" x2="880" y2="446" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="628" y="463" font-size="11" fill="#333">aspect</text>
+  <text x="790" y="463" font-size="11" fill="#555">VARCHAR2(50)</text>
+  <text x="865" y="463" font-size="10" fill="#8B3A3A" font-weight="bold">PK</text>
+  <text x="628" y="476" font-size="10" fill="#888" font-style="italic">← 보습/향/트러블 등 8개</text>
+  <line x1="610" y1="482" x2="880" y2="482" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="628" y="499" font-size="11" fill="#333">sentiment</text>
+  <text x="790" y="499" font-size="11" fill="#555">VARCHAR2(10)</text>
+  <text x="865" y="499" font-size="10" fill="#8B3A3A" font-weight="bold">PK</text>
+  <text x="628" y="512" font-size="10" fill="#888" font-style="italic">← positive / negative / neutral</text>
+  <line x1="610" y1="518" x2="880" y2="518" stroke="#E8E8E8" stroke-width="1"/>
+
+  <text x="628" y="535" font-size="11" fill="#333">cnt</text>
+  <text x="790" y="535" font-size="11" fill="#555">NUMBER</text>
+  <text x="628" y="548" font-size="10" fill="#888" font-style="italic">← MERGE INTO로 누적 집계</text>
+
+  <!-- ═══ FK 관계선 ═══ -->
+
+  <!-- T_REVIEW → T_PRODUCT (우측 상단으로) -->
+  <line x1="290" y1="460" x2="400" y2="460" stroke="#4A7A4A" stroke-width="2" stroke-dasharray="6,3"/>
+  <line x1="400" y1="460" x2="400" y2="130" stroke="#4A7A4A" stroke-width="2" stroke-dasharray="6,3"/>
+  <line x1="400" y1="130" x2="610" y2="130" stroke="#4A7A4A" stroke-width="2" stroke-dasharray="6,3"/>
+  <polygon points="610,126 596,130 610,134" fill="#4A7A4A"/>
+  <text x="395" y="300" text-anchor="middle" font-size="10" fill="#4A7A4A" font-weight="bold" transform="rotate(-90,395,300)">platform + product_id</text>
+
+  <!-- T_ASPECT_SENTIMENT → T_PRODUCT (직접 위로) -->
+  <line x1="745" y1="360" x2="745" y2="310" stroke="#4A7A4A" stroke-width="2" stroke-dasharray="6,3"/>
+  <polygon points="741,310 745,296 749,310" fill="#4A7A4A"/>
+  <text x="760" y="340" font-size="10" fill="#4A7A4A" font-weight="bold">FK</text>
+
+  <!-- 범례 -->
+  <rect x="320" y="540" width="260" height="64" rx="4" fill="#F5F5F5" stroke="#CCCCCC" stroke-width="1"/>
+  <text x="450" y="558" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">범례</text>
+  <rect x="335" y="565" width="12" height="12" fill="#8B3A3A"/>
+  <text x="352" y="575" font-size="10" fill="#333">PK — Primary Key</text>
+  <rect x="335" y="583" width="12" height="2" fill="#4A7A4A"/>
+  <line x1="335" y1="589" x2="347" y2="589" stroke="#4A7A4A" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="352" y="592" font-size="10" fill="#333">FK — 복합 외래키 (platform + product_id)</text>
+  <text x="475" y="575" font-size="10" fill="#333">복합 PK — 플랫폼별 ID 중복 방지</text>
+  <text x="475" y="592" font-size="10" fill="#888" font-style="italic">쿠팡/무신사/올리브영 각자 번호체계 사용</text>
+</svg>
